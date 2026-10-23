@@ -1,0 +1,8 @@
+[Unit]
+Description=Consistent Daynote SQLite backup
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker exec daynote python /app/server.py backup

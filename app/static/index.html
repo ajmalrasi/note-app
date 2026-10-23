@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb">
+  <title>Daynote — notes, day by day</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-area"><button class="icon-button menu-toggle" aria-label="Toggle navigation" id="menu-toggle"></button><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>Daynote<span class="brand-dot">.</span></a></div>
+    <label class="search"><span data-icon="search"></span><input id="search" type="search" placeholder="Search your notes" aria-label="Search your notes"><kbd>/</kbd></label>
+    <div class="top-actions"><button class="preview-badge" id="guide-button">Settings</button><button class="icon-button" id="theme-button" aria-label="Switch to dark appearance"></button><span class="avatar" id="owner-avatar" aria-label="Your workspace">A</span></div>
+  </header>
+  <button class="nav-scrim" id="nav-scrim" aria-label="Close navigation" hidden></button>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <div class="workspace-label">MY WORKSPACE</div>
+    <nav id="main-nav">
+      <button class="nav-item active" data-scope="all"><span data-icon="notes"></span><span>All notes</span><span class="nav-count" id="all-count"></span></button>
+      <button class="nav-item" data-scope="pinned"><span data-icon="pin"></span><span>Pinned</span></button>
+      <button class="nav-item" data-scope="archive"><span data-icon="archive"></span><span>Archive</span></button>
+      <button class="nav-item" data-scope="trash"><span data-icon="trash"></span><span>Trash</span></button>
+    </nav>
+    <div class="sidebar-rule"></div>
+    <div class="workspace-label label-heading">LABELS</div>
+    <nav id="label-nav"><button class="nav-item" data-label="Personal"><span class="label-dot personal"></span><span>Personal</span></button><button class="nav-item" data-label="Work"><span class="label-dot work"></span><span>Work</span></button><button class="nav-item" data-label="Ideas"><span class="label-dot ideas"></span><span>Ideas</span></button></nav>
+    <section class="mini-calendar" aria-label="Browse notes by date">
+      <div class="calendar-heading"><strong id="calendar-title">October 2026</strong><div><button id="calendar-prev" class="icon-button small" aria-label="Previous month"></button><button id="calendar-next" class="icon-button small" aria-label="Next month"></button></div></div>
+      <div class="calendar-weekdays" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="calendar-days" id="calendar-days"></div><div class="calendar-legend"><span></span> A day with notes</div>
+    </section>
+    <div class="sidebar-bottom"><span class="tiny-mark" aria-hidden="true"></span><div>Your space. Your pace.<small>Private workspace · Raspberry Pi</small></div></div>
+  </aside>
+  <main>
+    <div class="page-heading"><div><div class="eyebrow" id="eyebrow">THURSDAY, 22 OCTOBER</div><h1 id="page-title">All notes</h1><p id="page-description">A place for everything on your mind.</p></div><button class="new-note" id="new-note"><span data-icon="plus"></span>New note</button></div>
+    <button class="composer" id="composer"><span data-icon="edit"></span><span>Take a note…</span><span class="composer-hint">A thought, a list, a little reminder.</span><span class="composer-end" data-icon="plus"></span></button>
+    <section class="toolbar" aria-label="Note views and filters">
+      <div class="group-control"><span class="control-caption">Group by</span><div class="segmented" aria-label="Group notes"><button data-group="day" aria-pressed="true">Day</button><button data-group="week" aria-pressed="false">Week</button><button data-group="month" aria-pressed="false">Month</button></div></div>
+      <div class="view-controls"><label class="date-filter"><span data-icon="calendar"></span><select id="date-filter" aria-label="Filter by date"><option value="all">All dates</option><option value="today">Today</option><option value="week">This week</option><option value="month">This month</option><option value="custom">Choose a date</option></select></label><input id="custom-date" aria-label="Choose a date" type="date" hidden><div class="layout-control"><button id="grid-button" class="icon-button active" aria-label="Grid layout" aria-pressed="true"></button><button id="list-button" class="icon-button" aria-label="List layout" aria-pressed="false"></button></div></div>
+    </section>
+    <div id="filter-summary" class="filter-summary" hidden></div>
+    <div id="connection-status" role="status" hidden></div><div id="recover-draft" class="recovery-banner" hidden><span>You have an unsaved draft on this device.</span><button id="recover-draft-button" class="text-button">Continue editing</button><button id="discard-draft-button" class="text-button">Discard draft</button></div><div id="notes-feed" aria-live="polite"></div><button class="load-more done-button" id="load-more" hidden>Load more notes</button>
+    <footer class="feed-footer"><span class="footer-line"></span><span>A little more room to think.</span><span class="footer-line"></span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="editor" class="editor-dialog" aria-labelledby="editor-heading">
+    <form id="editor-form">
+      <div class="editor-top"><span class="editor-caption" id="editor-heading">YOUR NOTE</span><div><button type="button" id="editor-pin" class="icon-button" aria-label="Pin note"></button><button type="button" id="editor-close" class="icon-button" aria-label="Close note"></button></div></div>
+      <input id="note-title" class="note-title" aria-label="Note title" placeholder="Title" maxlength="200">
+      <textarea id="note-body" class="note-body" aria-label="Note content" placeholder="Let your thoughts land here…"></textarea>
+      <div id="checklist-editor" hidden></div><button type="button" id="add-item" class="text-button" hidden>+ Add an item</button>
+      <div class="editor-context"><span data-icon="calendar"></span><span id="note-date"></span></div>
+      <div class="editor-options"><div class="swatches" id="swatches" role="group" aria-label="Note color"></div><label class="editor-label-select"><span data-icon="tag"></span><select id="note-label" aria-label="Note label"><option value="">No label</option><option>Personal</option><option>Work</option><option>Ideas</option></select></label></div>
+      <div class="save-problem" id="save-problem" hidden></div>
+      <div class="editor-footer"><div><button type="button" id="toggle-checklist" class="icon-button" aria-label="Switch to checklist"></button><button type="button" id="editor-archive" class="icon-button" aria-label="Archive note"></button><button type="button" id="editor-trash" class="icon-button" aria-label="Move note to trash"></button></div><span id="save-status" role="status">Not yet saved</span><button type="submit" class="done-button">Done</button></div>
+    </form>
+  </dialog>
+  <dialog id="guide" class="guide-dialog" aria-labelledby="guide-title"><button id="guide-close" class="icon-button guide-close" aria-label="Close settings"></button><div class="eyebrow">YOUR WORKSPACE</div><h2 id="guide-title">Make yourself at home.</h2><p id="owner-name"></p><p>Your notes stay on your Raspberry Pi. Weeks start on Monday, and new notes use India time. Editing keeps the original creation date.</p><div class="settings-exports"><a class="done-button" href="/api/export/json" download>Export all notes · JSON</a><a class="text-button" href="/api/export/markdown" download>Download Markdown archive</a></div><div class="guide-note">Backups run nightly on the Pi. Keep an additional copy on another device. This private-network release uses HTTP and needs the Pi to be reachable for saving.</div><div class="guide-actions"><button id="refresh-notes" class="text-button">Refresh notes</button><button id="logout" class="done-button">Sign out</button></div></dialog>
+  <section id="auth-screen" class="auth-screen" aria-labelledby="auth-title" hidden>
+    <div class="auth-card"><div class="auth-brand"><span class="brand-mark" aria-hidden="true"></span>Daynote.</div><div class="eyebrow">YOUR PRIVATE SPACE</div><h1 id="auth-title">Welcome back.</h1><p id="auth-description">Sign in to your notes on your Raspberry Pi.</p><form id="auth-form"><label id="name-label" hidden>Your name<input id="auth-name" value="Ajmal" maxlength="60" autocomplete="name"></label><label id="setup-label" hidden>Setup code<input id="setup-code" autocomplete="off"></label><label>Password<input id="auth-password" type="password" autocomplete="current-password" required maxlength="256"></label><p id="password-help" class="auth-help" hidden>Choose a password with at least 12 characters. This is separate from your Pi login.</p><p id="auth-error" role="alert" hidden></p><button id="auth-submit" class="done-button" type="submit">Sign in</button></form><p class="auth-footnote">Your thoughts, in their own time.</p></div>
+  </section>
+  <script src="/static/app.js"></script>
+</body>
+</html>

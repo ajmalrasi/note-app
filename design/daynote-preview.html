@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb">
+  <title>Daynote — notes, day by day</title>
+  <style>
+@charset "UTF-8";
+:root{color-scheme:light;--bg:#f8f9fb;--surface:#fff;--text:#292c33;--muted:#737984;--line:#e7e9ee;--hover:#eef0f4;--accent:#f7c94c;--accent-soft:#fff1be;--card-plain:#fff;--card-sand:#fff1d4;--card-sage:#e9f0e5;--card-lavender:#eeeafa;--card-rose:#fbe8e6;--card-blue:#e7effa;--shadow:0 6px 22px #292c3309;--modal-shadow:0 24px 100px #171c342b}
+:root[data-theme=dark]{color-scheme:dark;--bg:#191b20;--surface:#22252b;--text:#eceef3;--muted:#a3a9b5;--line:#343840;--hover:#2d3139;--accent:#edc355;--accent-soft:#514622;--card-plain:#24272e;--card-sand:#413a2a;--card-sage:#2c3b31;--card-lavender:#363246;--card-rose:#443234;--card-blue:#2c3849;--shadow:0 6px 22px #00000012;--modal-shadow:0 24px 100px #0008}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button{border:0;background:none}button:focus-visible,a:focus-visible{outline:2px solid #92701b;outline-offset:4px}button:disabled{cursor:default;opacity:.5}input,textarea{color:var(--text)}input::placeholder,textarea::placeholder{color:var(--muted)}[hidden]{display:none!important}svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}button svg{pointer-events:none}.icon-button{width:35px;height:35px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}.icon-button:hover{background:var(--hover);color:var(--text)}.icon-button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px #0000000d}.icon-button.small{width:26px;height:28px}.icon-button.small svg{width:15px;height:15px}
+.topbar{height:76px;border-bottom:1px solid var(--line);background:var(--surface);display:flex;align-items:center;padding:0 30px 0 28px;gap:36px;position:sticky;top:0;z-index:5}.brand-area{width:186px;flex-shrink:0;display:flex;align-items:center}.brand{display:flex;align-items:center;color:var(--text);text-decoration:none;font-size:23px;letter-spacing:-.9px;font-weight:650}.brand-dot{color:#b58c21}.brand-mark{display:block;width:26px;height:31px;background:var(--accent);border-radius:6px 6px 8px 6px;position:relative;margin-right:11px;transform:rotate(-6deg)}.brand-mark:before,.brand-mark:after{content:"";position:absolute;left:7px;height:2px;border-radius:4px;background:#80651b;opacity:.65;top:12px;width:12px}.brand-mark:after{top:18px;width:8px}.search{height:44px;max-width:610px;flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;padding:0 15px;gap:11px;color:var(--muted)}.search:focus-within{border-color:#b6aa7c;box-shadow:0 0 0 3px #e9c85818}.search input{border:0;background:none;outline:none;width:100%;font-size:14px;min-width:0}.search kbd{font:12px/1.5 inherit;border:1px solid var(--line);padding:0 6px;border-radius:4px}.top-actions{margin-left:auto;display:flex;align-items:center;gap:16px}.preview-badge{font-size:11px;letter-spacing:.2px;border:1px solid var(--line);border-radius:6px;padding:5px 9px;color:var(--muted);white-space:nowrap}.preview-badge:hover{background:var(--hover)}.avatar{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--text)}.menu-toggle{display:none}
+.sidebar{width:224px;padding:32px 16px 24px 18px;position:fixed;top:76px;bottom:0;display:flex;flex-direction:column;overflow:auto;border-right:1px solid var(--line);background:var(--bg)}.workspace-label{font-size:10px;letter-spacing:1.6px;font-weight:600;color:var(--muted);padding:0 14px;margin-bottom:13px}.nav-item{width:100%;display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:9px;text-align:left;color:var(--muted);font-size:13px;margin:3px 0;min-height:42px}.nav-item:hover{background:var(--hover);color:var(--text)}.nav-item.active{background:var(--accent-soft);color:var(--text);font-weight:550}.nav-count{margin-left:auto;font-size:11px;opacity:.7}.nav-item svg{width:18px;height:18px}.sidebar-rule{height:1px;background:var(--line);margin:21px 14px}.label-heading{margin-bottom:7px}.label-dot{width:8px;height:8px;border-radius:50%;margin:0 5px;flex-shrink:0}.personal{background:#cba87b}.work{background:#9b92bf}.ideas{background:#8ba68b}.mini-calendar{margin:34px 9px 25px}.calendar-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.calendar-heading strong{font-size:12px;font-weight:550}.calendar-heading>div{display:flex}.calendar-weekdays,.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:3px}.calendar-weekdays{font-size:10px;color:var(--muted);margin-bottom:8px}.calendar-days button{aspect-ratio:1;border-radius:50%;font-size:11px;position:relative;min-width:0;padding:0}.calendar-days button:hover{background:var(--hover)}.calendar-days button.today{background:var(--text);color:var(--surface)}.calendar-days button.selected{outline:1px solid #aa8731;outline-offset:1px}.calendar-days button.has-notes:after{content:"";width:3px;height:3px;border-radius:50%;background:currentColor;position:absolute;bottom:2px;left:calc(50% - 1.5px)}.calendar-days button.today:after{background:var(--accent)}.calendar-legend{display:flex;gap:6px;align-items:center;font-size:10px;color:var(--muted);margin-top:13px}.calendar-legend span{width:3px;height:3px;border-radius:50%;background:var(--muted)}.sidebar-bottom{margin-top:auto;padding:20px 12px 0;display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)}.sidebar-bottom small{display:block;font-size:9px;margin-top:2px}.tiny-mark{width:7px;height:7px;background:#9ab098;border-radius:50%;flex-shrink:0}
+main{margin-left:224px;padding:40px 46px 30px;max-width:1580px}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:29px}.eyebrow{font-size:10px;font-weight:600;letter-spacing:1.8px;color:var(--muted)}h1{font-size:30px;line-height:1.25;letter-spacing:-.9px;font-weight:550;margin:9px 0 7px}.page-heading p{font-size:13px;color:var(--muted);margin:0}.new-note{display:flex;gap:8px;align-items:center;justify-content:center;background:var(--text);color:var(--surface);border-radius:9px;padding:10px 17px;font-size:12px;box-shadow:0 3px 8px #0000000c}.new-note:hover{opacity:.85}.new-note svg{width:16px;height:16px}.composer{display:flex;align-items:center;gap:13px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow);padding:19px 21px;color:var(--muted);text-align:left}.composer>span:nth-child(2){color:var(--text);font-size:14px;font-weight:500}.composer-hint{font-size:12px;opacity:.8;margin-left:3px}.composer-end{margin-left:auto;display:flex}.composer-end svg{width:17px;height:17px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:29px 0 30px}.group-control{display:flex;gap:13px;align-items:center}.control-caption{font-size:11px;color:var(--muted)}.segmented{display:flex;background:var(--hover);padding:4px;border-radius:9px;gap:2px}.segmented button{padding:5px 15px;border-radius:6px;font-size:11px;color:var(--muted)}.segmented button[aria-pressed=true]{background:var(--surface);color:var(--text);box-shadow:0 1px 4px #0000000b}.view-controls{display:flex;align-items:center;gap:15px}.date-filter{display:flex;align-items:center;gap:7px;color:var(--muted)}.date-filter svg{width:15px;height:15px}.date-filter select{border:0;background:transparent;color:var(--text);font-size:11px;max-width:125px;padding:5px 3px}.layout-control{display:flex;border-left:1px solid var(--line);padding-left:13px;gap:4px}.layout-control .icon-button{width:30px;height:30px}.layout-control svg{width:16px;height:16px}#custom-date{font-size:11px;max-width:125px;border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:4px}.filter-summary{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:-13px 0 23px}.filter-summary button{font-size:11px;text-decoration:underline;text-underline-offset:3px}.note-group{margin-bottom:32px}.group-heading{display:flex;gap:10px;align-items:center;margin-bottom:15px}.group-heading h2{margin:0;font-size:13px;font-weight:600;letter-spacing:-.1px}.group-heading .group-date{font-size:11px;color:var(--muted)}.group-heading .group-quantity{font-size:10px;background:var(--hover);border-radius:5px;min-width:20px;text-align:center;padding:1px 5px;color:var(--muted)}.group-heading:after{content:"";height:1px;background:var(--line);flex:1;margin-left:3px}.note-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}.note-card{background:var(--card-plain);border:1px solid #00000008;border-radius:12px;padding:19px 20px 12px;position:relative;transition:box-shadow .16s,transform .16s;min-width:0;overflow-wrap:anywhere}.note-card:hover{box-shadow:0 5px 18px #1d25380c;transform:translateY(-2px)}.tone-sand{background:var(--card-sand)}.tone-sage{background:var(--card-sage)}.tone-lavender{background:var(--card-lavender)}.tone-rose{background:var(--card-rose)}.tone-blue{background:var(--card-blue)}.card-title-row{display:flex;align-items:start;gap:8px;margin-bottom:9px}.card-title{font-size:15px;font-weight:550;line-height:1.4;letter-spacing:-.15px;text-align:left;padding:0;flex:1}.card-pin-indicator{color:var(--muted);width:13px;height:13px;margin-top:3px}.card-content{font-size:12px;line-height:1.8;white-space:pre-line;display:block;text-align:left;padding:0;width:100%;color:var(--text);max-height:155px;overflow:hidden}.card-content p{margin:0}.note-checklist{list-style:none;padding:0;margin:10px 0 3px;font-size:12px}.note-checklist li{margin:7px 0}.note-checklist label{display:flex;align-items:flex-start;gap:9px;cursor:pointer}.note-checklist input{width:13px;height:13px;margin:3px 0 0;accent-color:#717b61;flex-shrink:0}.note-checklist .checked{text-decoration:line-through;opacity:.5}.more-items{font-size:11px;color:var(--muted);margin-top:9px}.card-label{display:inline-block;font-size:10px;padding:2px 8px;border-radius:5px;background:#00000008;margin-top:14px}.card-bottom{display:flex;align-items:center;margin-top:14px;min-height:28px;gap:4px}.card-time{color:var(--muted);font-size:10px;margin-right:auto}.card-actions{display:flex;gap:1px}.card-actions .icon-button{width:26px;height:27px;color:var(--text);opacity:.6;border-radius:5px}.card-actions .icon-button svg{width:14px;height:14px}.card-actions .icon-button:hover{background:#0000000a;opacity:1}.card-actions .is-pinned{opacity:1;color:#866d27}.note-grid.list{grid-template-columns:1fr;gap:10px;max-width:850px}.list .note-card{padding:17px 21px 12px}.list .card-content{max-height:72px}.list .card-label{margin-top:9px}.list .card-bottom{margin-top:7px}.list .note-checklist{display:flex;gap:18px;flex-wrap:wrap}.list .card-title-row{margin-bottom:4px}.feed-footer{display:flex;align-items:center;justify-content:center;gap:15px;color:var(--muted);font-size:10px;margin:40px 0 5px;opacity:.7}.footer-line{height:1px;width:40px;background:var(--line)}.empty-state{padding:70px 20px 90px;text-align:center}.empty-symbol{width:58px;height:58px;border-radius:17px;background:var(--hover);display:grid;place-items:center;color:var(--muted);margin:0 auto 20px}.empty-symbol svg{width:25px;height:25px}.empty-state h2{font-size:19px;font-weight:500}.empty-state p{font-size:13px;color:var(--muted)}.empty-state button{margin-top:10px}.toast{position:fixed;bottom:24px;left:calc(50% + 90px);transform:translateX(-50%);background:var(--text);color:var(--surface);padding:12px 20px;border-radius:9px;box-shadow:var(--shadow);font-size:12px;z-index:30;max-width:90vw;text-align:center}
+dialog{color:var(--text);border:1px solid var(--line);background:var(--surface);border-radius:16px;box-shadow:var(--modal-shadow);padding:0;max-height:90dvh}dialog::backdrop{background:#23273466;backdrop-filter:blur(3px)}.editor-dialog{width:590px;max-width:calc(100vw - 28px);background:var(--card-plain)}.editor-dialog form{padding:21px 27px 0}.editor-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.editor-top>div{display:flex;gap:5px}.editor-caption{font-size:10px;letter-spacing:1.6px;color:var(--muted)}.note-title{display:block;width:100%;font-size:23px;letter-spacing:-.5px;font-weight:550;border:0;background:none;padding:7px 0;outline:none}.note-title:focus-visible,.note-body:focus-visible{outline:none;box-shadow:0 2px 0 #bda35b66}.note-body{display:block;resize:vertical;min-height:230px;width:100%;background:none;border:0;outline:none;padding:12px 0;font-size:15px;line-height:1.8}.editor-context{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);margin-top:18px}.editor-context svg{width:13px;height:13px}.editor-options{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 0}.swatches{display:flex;gap:7px}.swatch{width:23px;height:23px;border-radius:50%;border:1px solid #00000015;background:var(--card-plain);display:grid;place-items:center}.swatch svg{width:13px;height:13px}.swatch[aria-pressed=true]{outline:1.5px solid var(--text);outline-offset:3px}.editor-label-select{display:flex;gap:5px;align-items:center;color:var(--muted)}.editor-label-select svg{width:14px;height:14px}.editor-label-select select{max-width:100px;border:0;background:transparent;font-size:11px;padding:4px;color:var(--text)}.editor-footer{border-top:1px solid #00000012;display:flex;gap:10px;align-items:center;padding:13px 0}.editor-footer>div{display:flex}.editor-footer #save-status{font-size:10px;color:var(--muted);margin-left:auto}.done-button{background:var(--text);color:var(--surface);border-radius:7px;padding:9px 19px;font-size:12px;white-space:nowrap}.text-button{font-size:12px;padding:6px 0;text-decoration:underline;text-underline-offset:4px}.check-edit-row{display:flex;align-items:center;gap:9px;margin:9px 0}.check-edit-row input[type=text]{width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:8px 0;outline:none}.check-edit-row input[type=checkbox]{accent-color:#7b826b}.save-problem{background:var(--surface);border:1px solid #c39b7e;border-radius:9px;padding:13px;font-size:12px;margin-bottom:17px}.save-problem strong{display:block;margin-bottom:4px}.save-problem p{margin:4px 0 10px;color:var(--muted)}.save-problem button{padding:5px 10px;border:1px solid var(--line);border-radius:5px;font-size:11px;margin-right:7px}.guide-dialog{width:520px;max-width:calc(100vw - 28px);padding:35px}.guide-close{position:absolute;right:15px;top:15px}.guide-dialog h2{font-size:29px;letter-spacing:-.8px;margin:12px 0}.guide-dialog p,.guide-dialog li{font-size:13px;color:var(--muted)}.guide-dialog ul{padding-left:20px;line-height:1.9}.guide-note{font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}.state-picker{display:flex;flex-direction:column;font-size:12px;gap:8px;margin-top:21px}.state-picker select{padding:9px;border-radius:7px;background:var(--bg);color:var(--text);border:1px solid var(--line)}.guide-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:25px}.nav-scrim{display:none}
+@media(min-width:1650px){.note-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1180px){.topbar{gap:22px;padding-right:22px}.brand-area{width:174px}.sidebar{width:212px}main{margin-left:212px;padding:35px 30px}.note-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.composer-hint{display:none}.top-actions{gap:10px}.preview-badge{font-size:10px}}
+@media(max-width:780px){.topbar{height:65px;padding:0 16px;gap:15px;flex-wrap:wrap}.brand-area{width:auto;gap:5px}.brand{font-size:21px}.brand-mark{width:22px;height:27px;margin-right:8px}.brand-mark:before{top:10px;left:6px;width:11px}.brand-mark:after{top:16px;left:6px}.menu-toggle{display:inline-flex;width:30px}.top-actions{gap:8px}.topbar>.search{order:3;position:absolute;left:18px;right:18px;top:85px;max-width:none;width:auto;height:42px}.search kbd{display:none}.preview-badge{font-size:9px;padding:4px 6px}.avatar{width:28px;height:28px;font-size:11px}.top-actions>.icon-button{width:30px}.sidebar{transform:translateX(-100%);transition:transform .2s;top:65px;width:244px;z-index:12;background:var(--surface);padding-top:25px}.sidebar.open{transform:translateX(0)}.nav-scrim:not([hidden]){display:block;position:fixed;inset:65px 0 0;background:#171d3155;z-index:11}.mini-calendar{max-width:180px}main{margin-left:0;padding:88px 22px 30px}.page-heading{margin-bottom:23px;align-items:center}.page-heading .eyebrow{font-size:9px;letter-spacing:1.5px}h1{font-size:27px;margin-top:7px}.page-heading p{font-size:12px}.new-note{padding:10px 12px;font-size:11px;gap:5px}.composer{padding:17px}.toolbar{margin:23px 0;gap:10px;flex-wrap:wrap}.control-caption{display:none}.segmented button{padding:5px 13px}.view-controls{gap:8px}.layout-control{padding-left:7px}.date-filter{gap:4px}.date-filter select{max-width:100px;font-size:10px}.note-grid{gap:13px}.note-card{padding:17px 16px 10px}.card-title{font-size:14px}.card-content{font-size:12px}.group-heading{gap:8px}.group-heading .group-date{font-size:10px}.toast{left:50%}.feed-footer{margin-top:30px}#custom-date{width:112px}.editor-dialog form{padding:17px 20px 0}.note-title{font-size:23px}.note-body{font-size:16px}.editor-footer{gap:5px}.editor-footer #save-status{max-width:130px;text-align:right}.editor-footer .icon-button{width:31px}.swatches{gap:6px}.swatch{width:22px;height:22px}}
+@media(max-width:480px){.note-grid{grid-template-columns:1fr}.note-card{padding:20px 21px 12px}.card-title{font-size:16px}.card-content{font-size:13px;max-height:180px}.note-checklist{font-size:13px}.card-time{font-size:11px}.card-label{font-size:11px}.card-actions .icon-button{width:34px;height:34px}.card-actions .icon-button svg{width:16px;height:16px}.card-bottom{margin-top:12px}.note-group{margin-bottom:28px}.new-note{width:39px;height:39px;font-size:0;padding:0;border-radius:10px}.new-note svg{width:19px;height:19px}.page-heading p{max-width:260px}.group-heading .group-date{font-size:10px}.guide-dialog{padding:30px 24px}.mini-calendar .calendar-days button{min-height:25px}.note-grid.list .card-content{max-height:90px}.list .note-checklist{display:block}.editor-options{flex-wrap:wrap}.editor-context{font-size:10px}.top-actions{gap:4px}.toolbar{row-gap:13px}.note-checklist input{width:16px;height:16px;margin-top:3px}.note-checklist label{min-height:28px}.note-checklist li{margin:3px 0}.editor-footer{flex-wrap:wrap}.editor-footer #save-status{font-size:10px}.editor-footer .done-button{padding:9px 14px}}
+@media(max-width:780px){.topbar{height:132px;padding-top:17px;align-items:flex-start}.topbar>.search{top:72px}.sidebar{top:132px}.nav-scrim:not([hidden]){inset:132px 0 0}main{padding-top:24px}}
+@media(max-width:360px){.topbar{padding-left:12px;padding-right:12px;gap:9px}.avatar{display:none}.brand{font-size:20px}.card-actions .icon-button{width:44px;height:44px}main{padding-left:18px;padding-right:18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-area"><button class="icon-button menu-toggle" aria-label="Toggle navigation" id="menu-toggle"></button><a class="brand" href="daynote-preview.html"><span class="brand-mark" aria-hidden="true"></span>Daynote<span class="brand-dot">.</span></a></div>
+    <label class="search"><span data-icon="search"></span><input id="search" type="search" placeholder="Search your notes" aria-label="Search your notes"><kbd>/</kbd></label>
+    <div class="top-actions"><button class="preview-badge" id="guide-button">Design preview</button><button class="icon-button" id="theme-button" aria-label="Switch to dark appearance"></button><span class="avatar" aria-label="Ajmal's workspace">A</span></div>
+  </header>
+  <button class="nav-scrim" id="nav-scrim" aria-label="Close navigation" hidden></button>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <div class="workspace-label">MY WORKSPACE</div>
+    <nav id="main-nav">
+      <button class="nav-item active" data-scope="all"><span data-icon="notes"></span><span>All notes</span><span class="nav-count" id="all-count"></span></button>
+      <button class="nav-item" data-scope="pinned"><span data-icon="pin"></span><span>Pinned</span></button>
+      <button class="nav-item" data-scope="archive"><span data-icon="archive"></span><span>Archive</span></button>
+      <button class="nav-item" data-scope="trash"><span data-icon="trash"></span><span>Trash</span></button>
+    </nav>
+    <div class="sidebar-rule"></div>
+    <div class="workspace-label label-heading">LABELS</div>
+    <nav id="label-nav"><button class="nav-item" data-label="Personal"><span class="label-dot personal"></span><span>Personal</span></button><button class="nav-item" data-label="Work"><span class="label-dot work"></span><span>Work</span></button><button class="nav-item" data-label="Ideas"><span class="label-dot ideas"></span><span>Ideas</span></button></nav>
+    <section class="mini-calendar" aria-label="Browse notes by date">
+      <div class="calendar-heading"><strong id="calendar-title">October 2026</strong><div><button id="calendar-prev" class="icon-button small" aria-label="Previous month"></button><button id="calendar-next" class="icon-button small" aria-label="Next month"></button></div></div>
+      <div class="calendar-weekdays" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      <div class="calendar-days" id="calendar-days"></div><div class="calendar-legend"><span></span> A day with notes</div>
+    </section>
+    <div class="sidebar-bottom"><span class="tiny-mark" aria-hidden="true"></span><div>Your space. Your pace.<small>Sample notes · browser only</small></div></div>
+  </aside>
+  <main>
+    <div class="page-heading"><div><div class="eyebrow" id="eyebrow">THURSDAY, 22 OCTOBER</div><h1 id="page-title">All notes</h1><p id="page-description">A place for everything on your mind.</p></div><button class="new-note" id="new-note"><span data-icon="plus"></span>New note</button></div>
+    <button class="composer" id="composer"><span data-icon="edit"></span><span>Take a note…</span><span class="composer-hint">A thought, a list, a little reminder.</span><span class="composer-end" data-icon="plus"></span></button>
+    <section class="toolbar" aria-label="Note views and filters">
+      <div class="group-control"><span class="control-caption">Group by</span><div class="segmented" aria-label="Group notes"><button data-group="day" aria-pressed="true">Day</button><button data-group="week" aria-pressed="false">Week</button><button data-group="month" aria-pressed="false">Month</button></div></div>
+      <div class="view-controls"><label class="date-filter"><span data-icon="calendar"></span><select id="date-filter" aria-label="Filter by date"><option value="all">All dates</option><option value="today">Today</option><option value="week">This week</option><option value="month">This month</option><option value="custom">Choose a date</option></select></label><input id="custom-date" aria-label="Choose a date" type="date" hidden><div class="layout-control"><button id="grid-button" class="icon-button active" aria-label="Grid layout" aria-pressed="true"></button><button id="list-button" class="icon-button" aria-label="List layout" aria-pressed="false"></button></div></div>
+    </section>
+    <div id="filter-summary" class="filter-summary" hidden></div>
+    <div id="notes-feed" aria-live="polite"></div>
+    <footer class="feed-footer"><span class="footer-line"></span><span>A little more room to think.</span><span class="footer-line"></span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="editor" class="editor-dialog" aria-labelledby="editor-heading">
+    <form id="editor-form">
+      <div class="editor-top"><span class="editor-caption" id="editor-heading">YOUR NOTE</span><div><button type="button" id="editor-pin" class="icon-button" aria-label="Pin note"></button><button type="button" id="editor-close" class="icon-button" aria-label="Close note"></button></div></div>
+      <input id="note-title" class="note-title" aria-label="Note title" placeholder="Title" maxlength="200">
+      <textarea id="note-body" class="note-body" aria-label="Note content" placeholder="Let your thoughts land here…"></textarea>
+      <div id="checklist-editor" hidden></div><button type="button" id="add-item" class="text-button" hidden>+ Add an item</button>
+      <div class="editor-context"><span data-icon="calendar"></span><span id="note-date"></span></div>
+      <div class="editor-options"><div class="swatches" id="swatches" role="group" aria-label="Note color"></div><label class="editor-label-select"><span data-icon="tag"></span><select id="note-label" aria-label="Note label"><option value="">No label</option><option>Personal</option><option>Work</option><option>Ideas</option></select></label></div>
+      <div class="save-problem" id="save-problem" hidden></div>
+      <div class="editor-footer"><div><button type="button" id="toggle-checklist" class="icon-button" aria-label="Switch to checklist"></button><button type="button" id="editor-archive" class="icon-button" aria-label="Archive note"></button><button type="button" id="editor-trash" class="icon-button" aria-label="Move note to trash"></button></div><span id="save-status" role="status">Not yet saved</span><button type="submit" class="done-button">Done</button></div>
+    </form>
+  </dialog>
+  <dialog id="guide" class="guide-dialog" aria-labelledby="guide-title"><button id="guide-close" class="icon-button guide-close" aria-label="Close preview guide"></button><div class="eyebrow">DESIGN EXPLORATION</div><h2 id="guide-title">Meet Daynote.</h2><p>A familiar place to capture things, with a timeline that remembers when you wrote them.</p><ul><li>Switch Day, Week, and Month to regroup the same notes.</li><li>Try search, labels, the calendar, and grid or list layout.</li><li>Open a card to edit it. Changes stay in this browser.</li><li>Pin, archive, trash, and restore the sample notes.</li></ul><div class="guide-note">This is a design prototype with sample content and a fixed demo date of 22 October 2026. It is not connected to your Raspberry Pi. Browser storage can be cleared.</div><label class="state-picker">Editor state to explore<select id="demo-state"><option value="normal">Normal save</option><option value="error">Could not save</option><option value="conflict">Another edit was found</option></select></label><div class="guide-actions"><button id="reset-demo" class="text-button">Reset sample notes</button><button id="start-exploring" class="done-button">Start exploring</button></div></dialog>
+  <script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const TODAY = '2026-10-22';
+  const STORE = 'daynote-design-v1';
+  const paths = {
+    search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/>',
+    plus:'<path d="M12 5v14M5 12h14"/>',
+    notes:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+    pin:'<path d="m9 3 6 0-1 6 4 4v2H6v-2l4-4-1-6ZM12 15v6"/>',
+    archive:'<rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v12h14V8M10 12h4"/>',
+    trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>',
+    calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 11h18M8 15h1M13 15h1"/>',
+    edit:'<path d="m15 4 5 5M4 20l5-1L21 7a2.2 2.2 0 0 0-4-4L5 15l-1 5Z"/>',
+    grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+    list:'<path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/>',
+    moon:'<path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/>',
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
+    left:'<path d="m14 6-6 6 6 6"/>',right:'<path d="m10 6 6 6-6 6"/>',
+    close:'<path d="m6 6 12 12M6 18 18 6"/>',
+    check:'<path d="m5 12 4 4L19 6"/>',
+    tag:'<path d="M3 3h8l10 10-8 8L3 11V3Z"/><circle cx="7" cy="7" r="1"/>',
+    checklist:'<path d="M10 6h11M10 12h11M10 18h11M3 5l1 1 2-2M3 11l1 1 2-2M3 17l1 1 2-2"/>',
+    restore:'<path d="M3 10a9 9 0 1 1 0 6M3 4v6h6M12 7v5l3 2"/>',
+    menu:'<path d="M4 6h16M4 12h16M4 18h16"/>'
+  };
+  const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.notes}</svg>`;
+  document.querySelectorAll('[data-icon]').forEach(el => el.innerHTML = icon(el.dataset.icon));
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const copy = value => JSON.parse(JSON.stringify(value));
+  const seed = () => {
+    const make = (id,date,time,title,body,color,label,extra={}) => ({id,date,time,title,body,color,label,pinned:false,archived:false,deleted:false,items:[],...extra});
+    return [
+      make('morning',TODAY,'09:15','A slower morning','Open the windows. Make a good cup of coffee.\n\nA small reminder to leave a little breathing room in the day.','sand','Personal',{pinned:true}),
+      make('week-list',TODAY,'11:40','Little things, this week','','sage','Personal',{items:[{text:'Pick up a new notebook',done:true},{text:'Call home',done:false},{text:'Take a walk without my phone',done:false},{text:'Try that new coffee place',done:false}]}),
+      make('idea',TODAY,'14:05','An idea worth keeping','What if finding an old thought felt as easy as remembering the day?\n\nLess organizing. More remembering.','plain','Ideas'),
+      make('project','2026-10-21','16:30','A few thoughts on the project','Keep it simple enough to use every day.\n\n• A quick place to capture things\n• Dates that make sense\n• Everything in one quiet space','lavender','Work',{pinned:true}),
+      make('reading','2026-10-21','20:10','From today’s reading','“Almost everything will work again if you unplug it for a few minutes, including you.”\n\n— Anne Lamott','plain','Personal'),
+      make('weekend','2026-10-21','08:25','For the weekend','Breakfast somewhere new. A long walk. Maybe finally finish the book on my bedside table.','rose','Ideas'),
+      make('home','2026-10-18','10:05','Around the house','','plain','Personal',{items:[{text:'Water the plants',done:true},{text:'Clear the desk',done:true},{text:'Sort the drawer of cables',done:false}]}),
+      make('october','2026-10-02','18:20','October, a little more intentionally','Make room for the things I keep saying I want to do. Start with one small thing each day.','blue','Personal'),
+      make('bookmarks','2026-10-01','12:00','Things to look into','Local-first apps\nA better backup routine\nA shelf for the corner of the room','plain','Ideas'),
+      make('september','2026-09-30','17:45','September in a sentence','A busy month, with some very good small moments. More of those, please.','sage','Personal'),
+      make('garden','2026-09-14','09:30','A tiny balcony garden','Basil, mint, and something that flowers. Start small. Find pots with drainage.','sand','Ideas'),
+      make('archived','2026-10-14','15:10','Notes from the last catch-up','The first version should feel calm, familiar, and easy to come back to.','lavender','Work',{archived:true}),
+      make('deleted','2026-10-12','13:15','An old shopping list','Milk, bread, lemons.','plain','Personal',{deleted:true})
+    ];
+  };
+  let notes = seed();
+  try { const stored=JSON.parse(localStorage.getItem(STORE)); if(stored?.version===1 && Array.isArray(stored.notes)) notes=stored.notes; } catch {}
+  let state={scope:'all',label:'',group:'day',layout:'grid',range:'all',date:'',search:''};
+  let calendarMonth = new Date('2026-10-01T12:00:00Z');
+  let draft=null, timer=null, toastTimer=null, mode='normal';
+  const unsavedDrafts=new Map();
+  const editor=$('editor');
+  const dateObject = date => new Date(`${date}T12:00:00Z`);
+  const isoDate = date => date.toISOString().slice(0,10);
+  const dateFormat = (date,options) => dateObject(date).toLocaleDateString('en-GB',{...options,timeZone:'UTC'});
+  const shortDate = date => dateFormat(date,{day:'numeric',month:'short'});
+  const longDate = date => dateFormat(date,{day:'numeric',month:'short',year:'numeric'});
+  const weekStart = date => {const d=dateObject(date);d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7));return isoDate(d);};
+  const weekEnd = date => {const d=dateObject(weekStart(date));d.setUTCDate(d.getUTCDate()+6);return isoDate(d);};
+  const notify = message => { $('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500); };
+  function persist(next) {
+    try {localStorage.setItem(STORE,JSON.stringify({version:1,notes:next}));notes=next;return true;}
+    catch {notify('Browser storage is unavailable. Your change has not been saved.');return false;}
+  }
+  function updateNote(id,change,message) {
+    const next=notes.map(note=>note.id===id?{...note,...change}:note);
+    if(persist(next)){render();if(message)notify(message);}
+  }
+  function setTheme(theme) {
+    document.documentElement.dataset.theme=theme;
+    $('theme-button').innerHTML=icon(theme==='dark'?'sun':'moon');
+    $('theme-button').setAttribute('aria-label',theme==='dark'?'Switch to light appearance':'Switch to dark appearance');
+    try{localStorage.setItem('daynote-design-theme',theme);}catch{}
+  }
+  let savedTheme='light';try{savedTheme=localStorage.getItem('daynote-design-theme')||'light';}catch{}
+  setTheme(savedTheme);
+  const staticIcons={'menu-toggle':'menu','calendar-prev':'left','calendar-next':'right','grid-button':'grid','list-button':'list','editor-close':'close','editor-pin':'pin','editor-archive':'archive','editor-trash':'trash','toggle-checklist':'checklist','guide-close':'close'};
+  Object.entries(staticIcons).forEach(([id,name])=>$(id).innerHTML=icon(name));
+  function inScope(note) {
+    if(state.scope==='trash')return note.deleted;
+    if(state.scope==='archive')return note.archived&&!note.deleted;
+    return !note.archived&&!note.deleted&&(state.scope!=='pinned'||note.pinned);
+  }
+  function selectedNotes() {
+    return notes.filter(note=>{
+      if(!inScope(note)||state.label&&note.label!==state.label)return false;
+      const text=[note.title,note.body,...note.items.map(item=>item.text)].join(' ').toLowerCase();
+      if(state.search&&!text.includes(state.search.toLowerCase()))return false;
+      if(state.range==='today'&&note.date!==TODAY)return false;
+      if(state.range==='week'&&(note.date<weekStart(TODAY)||note.date>weekEnd(TODAY)))return false;
+      if(state.range==='month'&&!note.date.startsWith(TODAY.slice(0,7)))return false;
+      if(state.range==='custom'&&state.date&&note.date!==state.date)return false;
+      return true;
+    }).sort((a,b)=>b.date.localeCompare(a.date)||b.time.localeCompare(a.time)||a.id.localeCompare(b.id));
+  }
+  function groupHeading(key) {
+    if(state.group==='month')return [dateFormat(key+'-01',{month:'long',year:'numeric'}),''];
+    if(state.group==='week'){
+      const end=weekEnd(key);const a=dateObject(key),b=dateObject(end);
+      const range=a.getUTCFullYear()!==b.getUTCFullYear()?`${longDate(key)} – ${longDate(end)}`:a.getUTCMonth()!==b.getUTCMonth()?`${shortDate(key)} – ${longDate(end)}`:`${a.getUTCDate()}–${longDate(end)}`;
+      return [range,key===weekStart(TODAY)?'This week':''];
+    }
+    const label=key===TODAY?'Today':key==='2026-10-21'?'Yesterday':dateFormat(key,{weekday:'long'});
+    return [label,dateFormat(key,{day:'numeric',month:'short',year:'numeric'})];
+  }
+  const actionButton=(action,id,name,label,active=false)=>`<button class="icon-button${active?' is-pinned':''}" data-action="${action}" data-id="${esc(id)}" aria-label="${esc(label)}" title="${esc(label)}">${icon(name)}</button>`;
+  function card(note) {
+    const checks=note.items.length?`<ul class="note-checklist">${note.items.slice(0,4).map((item,index)=>`<li><label><input type="checkbox" data-check="${esc(note.id)}" data-index="${index}" ${item.done?'checked':''} ${state.scope==='trash'?'disabled':''}><span class="${item.done?'checked':''}">${esc(item.text)}</span></label></li>`).join('')}</ul>${note.items.length>4?`<button class="more-items" data-action="open" data-id="${esc(note.id)}">+ ${note.items.length-4} more items</button>`:''}`:'';
+    const content=checks||`<button class="card-content" data-action="open" data-id="${esc(note.id)}" aria-label="Open ${esc(note.title||'untitled note')}">${esc(note.body)}</button>`;
+    const actions=state.scope==='trash'?actionButton('restore',note.id,'restore','Restore note')+actionButton('delete',note.id,'trash','Delete permanently'):actionButton('pin',note.id,'pin',note.pinned?'Unpin note':'Pin note',note.pinned)+actionButton('archive',note.id,note.archived?'restore':'archive',note.archived?'Unarchive note':'Archive note')+actionButton('trash',note.id,'trash','Move note to trash');
+    return `<article class="note-card tone-${esc(note.color)}"><div class="card-title-row"><button class="card-title" data-action="open" data-id="${esc(note.id)}">${esc(note.title||'Untitled note')}</button>${note.pinned?icon('pin').replace('<svg ','<svg class="card-pin-indicator" '):''}</div>${content}${note.label?`<span class="card-label">${esc(note.label)}</span>`:''}<div class="card-bottom"><time class="card-time" datetime="${note.date}T${note.time}">${state.group==='day'?note.time:shortDate(note.date)+' · '+note.time}</time><div class="card-actions">${actions}</div></div></article>`;
+  }
+  function render() {
+    const visible=selectedNotes();
+    const titles={all:'All notes',pinned:'Pinned',archive:'Archive',trash:'Trash'};
+    $('page-title').textContent=state.label||titles[state.scope];
+    $('page-description').textContent=state.scope==='archive'?'Out of the way. Always here when you need them.':state.scope==='trash'?'A second chance for things you let go.':state.scope==='pinned'?'The things you want to keep close.':state.label?'A little space for your '+state.label.toLowerCase()+'.':'A place for everything on your mind.';
+    $('all-count').textContent=notes.filter(n=>!n.archived&&!n.deleted).length;
+    document.querySelectorAll('[data-scope]').forEach(button=>{button.classList.toggle('active',button.dataset.scope===state.scope&&!state.label);button.setAttribute('aria-current',button.classList.contains('active')?'page':'false');});
+    document.querySelectorAll('[data-label]').forEach(button=>button.classList.toggle('active',button.dataset.label===state.label));
+    document.querySelectorAll('[data-group]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.group===state.group)));
+    ['grid','list'].forEach(type=>{$(type+'-button').classList.toggle('active',state.layout===type);$(type+'-button').setAttribute('aria-pressed',String(state.layout===type));});
+    $('date-filter').value=state.range;$('custom-date').hidden=state.range!=='custom';$('custom-date').value=state.date;
+    const hasFilter=Boolean(state.search||state.range!=='all');
+    $('filter-summary').hidden=!hasFilter;
+    if(hasFilter)$('filter-summary').innerHTML=`<span>${visible.length} ${visible.length===1?'note':'notes'}${state.search?' matching “'+esc(state.search)+'”':''}${state.range==='custom'&&state.date?' · '+longDate(state.date):''}</span><button id="clear-filters">Clear filters</button>`;
+    const groups=new Map();visible.forEach(note=>{const key=state.group==='day'?note.date:state.group==='week'?weekStart(note.date):note.date.slice(0,7);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(note);});
+    $('notes-feed').innerHTML=groups.size?[...groups].map(([key,items])=>{const [title,date]=groupHeading(key);items.sort((a,b)=>Number(b.pinned)-Number(a.pinned)||b.date.localeCompare(a.date)||b.time.localeCompare(a.time)||a.id.localeCompare(b.id));return `<section class="note-group"><div class="group-heading"><h2>${title}</h2>${date?`<span class="group-date">${date}</span>`:''}<span class="group-quantity" aria-label="${items.length} notes">${items.length}</span></div><div class="note-grid ${state.layout==='list'?'list':''}">${items.map(card).join('')}</div></section>`;}).join(''):`<div class="empty-state"><div class="empty-symbol">${icon(state.scope==='trash'?'trash':'notes')}</div><h2>${state.search?'No notes found':state.scope==='trash'?'A clean slate':'A little room for a thought'}</h2><p>${state.search?'Try another word, label, or date.':state.scope==='trash'?'Notes you move to trash will appear here.':'There are no notes in this view yet.'}</p><button class="text-button" id="empty-clear">${hasFilter?'Show all dates':state.scope==='all'?'Create a note':'Go to all notes'}</button></div>`;
+    $('composer').hidden=state.scope==='trash';renderCalendar();
+  }
+  function renderCalendar() {
+    $('calendar-title').textContent=calendarMonth.toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'});
+    const year=calendarMonth.getUTCFullYear(),month=calendarMonth.getUTCMonth();
+    const first=new Date(Date.UTC(year,month,1,12));const offset=(first.getUTCDay()+6)%7;
+    const total=new Date(Date.UTC(year,month+1,0,12)).getUTCDate();
+    const days=new Set(notes.filter(inScope).filter(n=>!state.label||n.label===state.label).map(n=>n.date));
+    $('calendar-days').innerHTML='<span></span>'.repeat(offset)+Array.from({length:total},(_,i)=>{const date=isoDate(new Date(Date.UTC(year,month,i+1,12)));const selected=state.range==='custom'&&state.date===date;return `<button data-date="${date}" class="${date===TODAY?'today ':''}${days.has(date)?'has-notes ':''}${selected?'selected':''}" aria-label="${longDate(date)}${days.has(date)?', has notes':''}" aria-pressed="${selected}">${i+1}</button>`;}).join('');
+  }
+  function syncNav(){const collapsed=matchMedia('(max-width:780px)').matches&&!$('sidebar').classList.contains('open');$('sidebar').inert=collapsed;$('sidebar').setAttribute('aria-hidden',String(collapsed));}
+  function closeNav(){ $('sidebar').classList.remove('open');$('nav-scrim').hidden=true;$('menu-toggle').setAttribute('aria-expanded','false');syncNav(); }
+  $('menu-toggle').setAttribute('aria-controls','sidebar');$('menu-toggle').setAttribute('aria-expanded','false');
+  $('menu-toggle').onclick=()=>{const open=$('sidebar').classList.toggle('open');$('nav-scrim').hidden=!open;$('menu-toggle').setAttribute('aria-expanded',String(open));syncNav();};
+  window.addEventListener('resize',syncNav);syncNav();
+  $('nav-scrim').onclick=closeNav;
+  $('main-nav').onclick=event=>{const button=event.target.closest('[data-scope]');if(button){state.scope=button.dataset.scope;state.label='';closeNav();render();}};
+  $('label-nav').onclick=event=>{const button=event.target.closest('[data-label]');if(button){state.label=state.label===button.dataset.label?'':button.dataset.label;state.scope='all';closeNav();render();}};
+  document.querySelectorAll('[data-group]').forEach(button=>button.onclick=()=>{state.group=button.dataset.group;render();});
+  ['grid','list'].forEach(type=>$(type+'-button').onclick=()=>{state.layout=type;render();});
+  $('date-filter').onchange=event=>{state.range=event.target.value;if(state.range==='custom'&&!state.date)state.date=TODAY;render();};
+  $('custom-date').onchange=event=>{state.date=event.target.value;render();};
+  $('search').oninput=event=>{state.search=event.target.value;render();};
+  $('filter-summary').onclick=event=>{if(event.target.closest('#clear-filters'))clearFilters();};
+  function clearFilters(){state.search='';state.range='all';state.date='';$('search').value='';render();}
+  $('calendar-prev').onclick=()=>{calendarMonth.setUTCMonth(calendarMonth.getUTCMonth()-1);renderCalendar();};
+  $('calendar-next').onclick=()=>{calendarMonth.setUTCMonth(calendarMonth.getUTCMonth()+1);renderCalendar();};
+  $('calendar-days').onclick=event=>{const button=event.target.closest('[data-date]');if(button){state.date=button.dataset.date;state.range='custom';closeNav();render();}};
+  $('theme-button').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+  $('notes-feed').onclick=event=>{
+    if(event.target.closest('#empty-clear')){if(state.search||state.range!=='all')clearFilters();else if(state.scope!=='all'){state.scope='all';state.label='';render();}else openEditor();return;}
+    const button=event.target.closest('[data-action]');if(!button)return;
+    const note=notes.find(n=>n.id===button.dataset.id);if(!note)return;
+    const action=button.dataset.action;
+    if(action==='open'){if(note.deleted){notify('Restore this note before editing it.');return;}openEditor(note);}
+    if(action==='pin')updateNote(note.id,{pinned:!note.pinned},note.pinned?'Note unpinned':'Pinned within its date group');
+    if(action==='archive')updateNote(note.id,{archived:!note.archived},note.archived?'Note returned to all notes':'Note archived');
+    if(action==='trash')updateNote(note.id,{deleted:true},'Note moved to Trash');
+    if(action==='restore')updateNote(note.id,{deleted:false},'Note restored');
+    if(action==='delete'&&confirm('Permanently delete this sample note? This cannot be undone.')){if(persist(notes.filter(n=>n.id!==note.id))){render();notify('Sample note permanently deleted');}}
+  };
+  $('notes-feed').onchange=event=>{const box=event.target.closest('[data-check]');if(!box)return;const note=notes.find(n=>n.id===box.dataset.check);const items=copy(note.items);items[Number(box.dataset.index)].done=box.checked;updateNote(note.id,{items});};
+  function openEditor(note) {
+    clearTimeout(timer);
+    const base=note||{id:'note-'+Date.now().toString(36),date:TODAY,time:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}),title:'',body:'',color:'plain',label:'',pinned:false,archived:false,deleted:false,items:[]};
+    draft=copy(unsavedDrafts.get(base.id)||base);
+    $('note-title').value=draft.title;$('note-body').value=draft.body;$('note-label').value=draft.label;
+    $('save-status').textContent=note?'Saved in this preview':'Not yet saved';
+    $('note-date').textContent=`Created ${longDate(draft.date)} · ${draft.time} · India time`;
+    $('save-problem').hidden=true;
+    renderEditorOptions();renderChecklist();editor.showModal();
+    $('note-title').focus();
+  }
+  function renderEditorOptions() {
+    editor.style.background=`var(--card-${draft.color})`;
+    $('editor-pin').setAttribute('aria-label',draft.pinned?'Unpin note':'Pin note');
+    $('editor-pin').setAttribute('aria-pressed',String(draft.pinned));
+    $('editor-pin').style.color=draft.pinned?'var(--text)':'';
+    $('editor-archive').setAttribute('aria-label',draft.archived?'Unarchive note':'Archive note');
+    $('editor-archive').innerHTML=icon(draft.archived?'restore':'archive');
+    $('swatches').innerHTML=['plain','sand','sage','lavender','rose','blue'].map(color=>`<button type="button" class="swatch" data-color="${color}" style="background:var(--card-${color})" aria-label="${color} note color" aria-pressed="${draft.color===color}">${draft.color===color?icon('check'):''}</button>`).join('');
+  }
+  function renderChecklist() {
+    const enabled=draft.kind==='checklist'||draft.items.length>0;
+    $('note-body').hidden=enabled;$('checklist-editor').hidden=!enabled;$('add-item').hidden=!enabled;
+    $('toggle-checklist').setAttribute('aria-label',enabled?'Switch to text note':'Switch to checklist');
+    $('checklist-editor').innerHTML=draft.items.map((item,index)=>`<div class="check-edit-row"><input type="checkbox" aria-label="Complete item ${index+1}" data-edit-check="${index}" ${item.done?'checked':''}><input type="text" aria-label="Checklist item ${index+1}" data-edit-text="${index}" value="${esc(item.text)}"><button type="button" class="icon-button" data-remove-item="${index}" aria-label="Remove item ${index+1}">${icon('close')}</button></div>`).join('');
+  }
+  function readDraft(){if(!draft)return;draft.title=$('note-title').value;draft.body=$('note-body').value;draft.label=$('note-label').value;}
+  const meaningful=note=>note.title.trim()||note.body.trim()||note.items.some(i=>i.text.trim());
+  function saveDraft() {
+    clearTimeout(timer);if(!draft)return true;readDraft();
+    if(!meaningful(draft)&&!draft.deleted){
+      if(notes.some(n=>n.id===draft.id)){
+        $('save-status').textContent='Empty note · not saved';$('save-problem').hidden=false;
+        $('save-problem').innerHTML='<strong>This note is empty</strong><p>Add some text, or move the note to Trash. Your last saved version is still available.</p>';
+        return false;
+      }
+      $('save-status').textContent='Empty note · not saved';return true;
+    }
+    if(mode!=='normal'){
+      unsavedDrafts.set(draft.id,copy(draft));$('save-status').textContent='Unsaved changes';$('save-problem').hidden=false;
+      $('save-problem').innerHTML=mode==='error'?'<strong>Could not save your changes</strong><p>Your draft is still open here. Reconnect and try again before closing the app.</p><button type="button" data-recover="retry">Try again</button>':'<strong>Another edit was found</strong><p>The saved note has not been overwritten. Keep your draft as a separate note to preserve both versions.</p><button type="button" data-recover="copy">Save a separate note</button>';
+      return false;
+    }
+    const saved={...copy(draft),items:draft.items.filter(i=>i.text.trim())};
+    const exists=notes.some(n=>n.id===draft.id);
+    const next=exists?notes.map(n=>n.id===saved.id?saved:n):[...notes,saved];
+    if(!persist(next)){unsavedDrafts.set(draft.id,copy(draft));$('save-status').textContent='Not saved';return false;}
+    unsavedDrafts.delete(draft.id);$('save-problem').hidden=true;$('save-status').textContent='Saved in this preview';render();return true;
+  }
+  function scheduleSave(){readDraft();$('save-status').textContent='Saving…';clearTimeout(timer);timer=setTimeout(saveDraft,650);}
+  function finishEditor(){const saved=saveDraft();if(!saved){notify('Your draft is still open. Resolve the save message first.');return;}const filtered=state.range!=='all'||state.scope!=='all'||state.label||state.search;if(filtered&&draft&&!selectedNotes().some(n=>n.id===draft.id)&&meaningful(draft))notify('Saved to its original date. Clear filters to see it.');draft=null;editor.close();}
+  $('new-note').onclick=()=>openEditor();$('composer').onclick=()=>openEditor();
+  $('note-title').oninput=scheduleSave;$('note-body').oninput=scheduleSave;$('note-label').onchange=scheduleSave;
+  $('swatches').onclick=event=>{const button=event.target.closest('[data-color]');if(button){draft.color=button.dataset.color;renderEditorOptions();scheduleSave();}};
+  $('editor-pin').onclick=()=>{draft.pinned=!draft.pinned;renderEditorOptions();scheduleSave();};
+  $('editor-close').onclick=finishEditor;
+  $('editor-form').onsubmit=event=>{event.preventDefault();finishEditor();};
+  editor.addEventListener('cancel',event=>{event.preventDefault();finishEditor();});
+  $('editor-archive').onclick=()=>{draft.archived=!draft.archived;if(saveDraft()){draft=null;editor.close();notify('Note moved');}else draft.archived=!draft.archived;};
+  $('editor-trash').onclick=()=>{draft.deleted=true;if(saveDraft()){draft=null;editor.close();notify('Note moved to Trash');}else draft.deleted=false;};
+  $('toggle-checklist').onclick=()=>{readDraft();const enabled=draft.kind==='checklist'||draft.items.length;if(enabled){draft.body=draft.items.map(i=>i.text).join('\n');draft.items=[];draft.kind='text';$('note-body').value=draft.body;}else{draft.items=(draft.body?draft.body.split('\n').filter(Boolean):['']).map(text=>({text,done:false}));draft.body='';draft.kind='checklist';$('note-body').value='';}renderChecklist();scheduleSave();};
+  $('add-item').onclick=()=>{draft.items.push({text:'',done:false});renderChecklist();$('checklist-editor').querySelectorAll('input[type=text]').item(draft.items.length-1).focus();};
+  $('checklist-editor').oninput=event=>{if(event.target.matches('[data-edit-text]')){draft.items[Number(event.target.dataset.editText)].text=event.target.value;scheduleSave();}};
+  $('checklist-editor').onchange=event=>{if(event.target.matches('[data-edit-check]')){draft.items[Number(event.target.dataset.editCheck)].done=event.target.checked;scheduleSave();}};
+  $('checklist-editor').onclick=event=>{const button=event.target.closest('[data-remove-item]');if(button){draft.items.splice(Number(button.dataset.removeItem),1);renderChecklist();scheduleSave();}};
+  $('save-problem').onclick=event=>{const button=event.target.closest('[data-recover]');if(!button)return;if(button.dataset.recover==='copy'){unsavedDrafts.delete(draft.id);draft.id='copy-'+Date.now().toString(36);draft.title=(draft.title||'Untitled note')+' (my version)';$('note-title').value=draft.title;notify('Both versions are preserved in this preview');}mode='normal';$('demo-state').value='normal';saveDraft();};
+  $('guide-button').onclick=()=>$('guide').showModal();
+  $('guide-close').onclick=()=>$('guide').close();$('start-exploring').onclick=()=>$('guide').close();
+  $('demo-state').onchange=event=>mode=event.target.value;
+  $('reset-demo').onclick=()=>{if(confirm('Reset sample notes and remove your changes in this design preview?')){if(persist(seed())){unsavedDrafts.clear();state={scope:'all',label:'',group:'day',layout:'grid',range:'all',date:'',search:''};$('search').value='';mode='normal';$('demo-state').value=mode;render();$('guide').close();notify('Sample notes reset');}}};
+  document.addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!editor.open&&!$('guide').open){event.preventDefault();$('search').focus();}});
+  window.addEventListener('beforeunload',event=>{if(editor.open&&draft&&(mode!=='normal'||$('save-status').textContent==='Saving…')){event.preventDefault();event.returnValue='';}});
+  render();
+})();
+
+</script>
+</body>
+</html>
