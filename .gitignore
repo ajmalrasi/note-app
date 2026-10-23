@@ -1,0 +1,33 @@
+# Python and development environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
+
+# Private runtime data, credentials, and backups
+**/data/
+.local-data/
+**/staging-data/
+**/backups/
+*.sqlite*
+*.db
+*.db-*
+*.tmp
+*.log
+.env
+.env.*
+!.env.example
+setup-token
+*.pem
+*.key
+*.tar.gz
+*.zip
+
+# Machine-specific project history and local deployment records
+PROJECT-NOTES.md
+03-pi-inspection.md
+06-deployment-guide.md
+deployment/verification*.json
+deployment/live-*.png
